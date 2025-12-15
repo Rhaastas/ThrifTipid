@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - ThrifTipid</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/modals.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            <div class="header-actions">
+                <a href="signup.html" class="action-btn"><span class="icon-user"></span><span>Sign Up</span></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome back</h1>
+                <p>Log in to continue buying and selling on ThrifTipid.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section" style="padding-top: 24px; padding-bottom: 48px;">
+        <div class="container">
+            <div class="items-grid" style="display:block; max-width:420px; margin:0 auto;">
+                <form id="loginForm" class="card" style="padding:24px;">
+                    <div class="form-group" style="margin-bottom:16px;">
+                        <label for="login">Email or Username</label>
+                        <input type="text" id="login" name="login" placeholder="you@example.com or username" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:16px;">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group" style="margin: 8px 0 20px; display:flex; justify-content:space-between; align-items:center;">
+                        <label style="display:flex; gap:8px; align-items:center;">
+                            <input type="checkbox" name="remember" value="1">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" style="font-size: 0.9rem;">Forgot password?</a>
+                    </div>
+                    <div id="error-message" style="display:none; padding:12px; margin-bottom:16px; background:#fee; color:#c33; border-radius:4px; font-size:0.9rem;"></div>
+                    <button type="submit" class="btn-primary btn-large" style="width:100%;">Log In</button>
+                    <p style="margin-top:12px; text-align:center;">New here? <a href="signup.html">Create an account</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const errorDiv = document.getElementById('error-message');
+                    const submitBtn = loginForm.querySelector('button[type="submit"]');
+                    
+                    // Hide error message
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                    
+                    // Get form values
+                    const login = document.getElementById('login').value.trim();
+                    const password = document.getElementById('password').value;
+                    
+                    // Validate
+                    if (!login || !password) {
+                        if (errorDiv) {
+                            errorDiv.textContent = 'Login and password are required';
+                            errorDiv.style.display = 'block';
+                        }
+                        return;
+                    }
+                    
+                    // Disable button
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Logging in...';
+                    }
+                    
+                    try {
+                        // Create FormData from form
+                        const formData = new FormData(loginForm);
+                        
+                        // Send request
+                        const response = await fetch('api/login.php', {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'include'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            // Redirect immediately - cookie is set by PHP response headers
+                            window.location.replace('index.html');
+                        } else {
+                            // Show error
+                            if (errorDiv) {
+                                errorDiv.textContent = data.error || 'An error occurred. Please try again.';
+                                errorDiv.style.display = 'block';
+                            }
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = 'Log In';
+                            }
+                        }
+                    } catch (error) {
+                        if (errorDiv) {
+                            errorDiv.textContent = 'Network error. Please try again.';
+                            errorDiv.style.display = 'block';
+                        }
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Log In';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

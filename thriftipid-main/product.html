@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - ThrifTipid</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/product.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/modals.css">
+    <link rel="stylesheet" href="styles/seller-dropdown.css">
+    <script src="scripts/auth.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            
+            <div class="search-container">
+                <form action="browse.html" method="get" class="search-bar">
+                    <span class="icon-search"></span>
+                    <input type="text" name="q" placeholder="Search for anything...">
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+            </div>
+
+            <div class="header-actions">
+                <a href="sell.html" class="action-btn" data-auth-visible="logged-in" id="sellBtn">
+                    <span class="icon-plus"></span>
+                    <span>Sell</span>
+                </a>
+                <a href="login.html" class="action-btn" data-auth-visible="logged-out" id="loginBtn">
+                    <span class="icon-user"></span>
+                    <span>Login</span>
+                </a>
+                <a href="signup.html" class="action-btn" data-auth-visible="logged-out" id="signupBtn">
+                    <span class="icon-user"></span>
+                    <span>Sign Up</span>
+                </a>
+                <button class="action-btn" data-auth-visible="logged-in">
+                    <span class="icon-bell"></span>
+                    <span class="badge">3</span>
+                </button>
+                <button class="action-btn" data-auth-visible="logged-in">
+                    <span class="icon-heart"></span>
+                </button>
+                <a href="profile.html" class="action-btn profile" data-auth-visible="logged-in">
+                    <span class="icon-user"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="product-main">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="browse.html">Browse</a>
+                <span class="breadcrumb-separator">/</span>
+                <span id="breadcrumbCategory">Category</span>
+                <span class="breadcrumb-separator">/</span>
+                <span id="breadcrumbTitle">Item</span>
+            </nav>
+
+            <div class="product-container">
+                <!-- Product Images -->
+                <div class="product-images">
+                    <div class="main-image-container">
+                        <img id="mainProductImage" src="" alt="Product Image" class="main-image">
+                        <button class="image-prev" id="prevImage"><span class="icon-arrow left"></span></button>
+                        <button class="image-next" id="nextImage"><span class="icon-arrow"></span></button>
+                    </div>
+                    <div class="image-thumbnails" id="thumbnailsContainer">
+                        <!-- Thumbnails will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="product-details">
+                    <div class="product-header">
+                        <h1 id="productTitle"></h1>
+                        <button class="save-btn" id="saveBtn">
+                            <span class="icon-heart"></span>
+                            <span>Save</span>
+                        </button>
+                    </div>
+
+                    <div class="product-price-section">
+                        <div class="price-main">
+                            <span class="price-current" id="productPrice"></span>
+                            <span class="price-original" id="productOriginalPrice"></span>
+                        </div>
+                        <div class="product-badges" id="productBadges">
+                            <!-- Badges will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Condition:</span>
+                            <span class="meta-value" id="productCondition"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Location:</span>
+                            <span class="meta-value" id="productLocation"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Posted:</span>
+                            <span class="meta-value" id="productTime"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Views:</span>
+                            <span class="meta-value" id="productViews">1,234</span>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        <h3>Description</h3>
+                        <p id="productDescription"></p>
+                    </div>
+
+                    <!-- Seller Info -->
+                    <div class="seller-card">
+                        <div class="seller-header">
+                            <div class="seller-avatar-section">
+                                <div class="seller-avatar" id="sellerAvatarContainer">
+                                    <!-- Avatar will be populated by JavaScript -->
+                                </div>
+                                <div class="seller-info">
+                                    <h4 id="sellerName"></h4>
+                                    <div class="seller-rating">
+                                        <span class="stars" id="sellerRating"></span>
+                                        <span class="rating-text" id="ratingText"></span>
+                                    </div>
+                                    <div class="seller-stats">
+                                        <span id="sellerReviews"></span> reviews
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="seller-dropdown-container">
+                                <button class="btn-outline view-profile-btn" id="viewProfileBtn">View Seller Info</button>
+                                <div class="seller-dropdown" id="sellerDropdown">
+                                    <!-- Dropdown content will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <button class="btn-primary btn-large" id="contactSellerBtn">
+                            <span class="icon-message"></span>
+                            Contact Seller
+                        </button>
+                        <button class="btn-secondary btn-large" id="makeOfferBtn">
+                            <span class="icon-handshake"></span>
+                            Make Offer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Items -->
+            <section class="related-items">
+                <h2>Similar Items</h2>
+                <div class="items-grid" id="relatedItemsGrid">
+                    <!-- Related items will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThrifTipid</h3>
+                    <p>Buy, sell, and trade with confidence in your local community.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Buy & Sell</h4>
+                    <ul>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Safety tips</a></li>
+                        <li><a href="#">Selling guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/data.js"></script>
+    <script src="scripts/modals.js"></script>
+    <script src="scripts/product.js"></script>
+    <script>
+    // Require authentication for contacting seller or making offers
+    (function(){
+        function bindGuard(id){
+            var el = document.getElementById(id);
+            if(!el) return;
+            el.addEventListener('click', function(e){
+                if (window.auth && !window.auth.isLoggedIn()) {
+                    e.preventDefault();
+                    window.auth.requireAuthRedirect(window.location.pathname + window.location.search);
+                }
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function(){
+                bindGuard('contactSellerBtn');
+                bindGuard('makeOfferBtn');
+            });
+        } else {
+            bindGuard('contactSellerBtn');
+            bindGuard('makeOfferBtn');
+        }
+    })();
+    </script>
+</body>
+</html>
+

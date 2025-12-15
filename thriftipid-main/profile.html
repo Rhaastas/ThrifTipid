@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - ThrifTipid</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/profile.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/modals.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            
+            <div class="search-container">
+                <form action="browse.html" method="get" class="search-bar">
+                    <span class="icon-search"></span>
+                    <input type="text" name="q" placeholder="Search for anything...">
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+            </div>
+
+            <div class="header-actions">
+                <a href="sell.html" class="action-btn">
+                    <span class="icon-plus"></span>
+                    <span>Sell</span>
+                </a>
+                <button class="action-btn">
+                    <span class="icon-bell"></span>
+                    <span class="badge">3</span>
+                </button>
+                <button class="action-btn">
+                    <span class="icon-heart"></span>
+                </button>
+                <a href="profile.html" class="action-btn profile active">
+                    <span class="icon-user"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <div class="container">
+            <!-- Profile Header -->
+            <section class="profile-header">
+                <div class="profile-cover">
+                    <div class="cover-placeholder"></div>
+                    <button class="edit-cover-btn">Edit Cover Photo</button>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <div class="avatar-placeholder-large">JD</div>
+                        </div>
+                        <button class="edit-avatar-btn" id="editAvatarBtn">
+                            <span class="icon-camera"></span>
+                        </button>
+                    </div>
+                    <div class="profile-details">
+                        <h1 id="profileName">John Doe</h1>
+                        <p class="profile-location" id="profileLocation">
+                            <span class="icon-map-marker"></span>
+                            Manila, Philippines
+                        </p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="itemsCount">12</span>
+                                <span class="stat-label">Items Listed</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="soldCount">8</span>
+                                <span class="stat-label">Items Sold</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="rating-display">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-value" id="profileRating">4.8</span>
+                                </div>
+                                <span class="stat-label" id="reviewCount">127 Reviews</span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn-primary" id="editProfileBtn">Edit Profile</button>
+                            <button class="btn-outline" id="viewSettingsBtn">Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Navigation Tabs -->
+            <nav class="profile-tabs">
+                <button class="profile-tab active" data-tab="items">My Items</button>
+                <button class="profile-tab" data-tab="saved">Saved Items</button>
+                <button class="profile-tab" data-tab="reviews">Reviews</button>
+                <button class="profile-tab" data-tab="settings">Settings</button>
+            </nav>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- My Items Tab -->
+                <section class="profile-section active" id="itemsSection">
+                    <div class="section-header">
+                        <h2>My Listed Items</h2>
+                        <a href="sell.html" class="btn-primary">+ List New Item</a>
+                    </div>
+                    <div class="items-filter">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="sold">Sold</button>
+                        <button class="filter-btn" data-filter="draft">Draft</button>
+                    </div>
+                    <div class="items-grid" id="myItemsGrid">
+                        <!-- Items will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="itemsEmpty" style="display: none;">
+                        <div class="empty-icon">📦</div>
+                        <h3>No items listed yet</h3>
+                        <p>Start selling by listing your first item!</p>
+                        <a href="sell.html" class="btn-primary">List Your First Item</a>
+                    </div>
+                </section>
+
+                <!-- Saved Items Tab -->
+                <section class="profile-section" id="savedSection">
+                    <div class="section-header">
+                        <h2>Saved Items</h2>
+                    </div>
+                    <div class="items-grid" id="savedItemsGrid">
+                        <!-- Saved items will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="savedEmpty" style="display: none;">
+                        <div class="empty-icon">❤</div>
+                        <h3>No saved items</h3>
+                        <p>Start browsing and save items you're interested in!</p>
+                        <a href="browse.html" class="btn-primary">Browse Items</a>
+                    </div>
+                </section>
+
+                <!-- Reviews Tab -->
+                <section class="profile-section" id="reviewsSection">
+                    <div class="section-header">
+                        <h2>Reviews & Ratings</h2>
+                        <div class="overall-rating">
+                            <span class="rating-large" id="overallRating">4.8</span>
+                            <div class="stars-large">★★★★☆</div>
+                            <span class="rating-count">127 total reviews</span>
+                        </div>
+                    </div>
+                    <div class="reviews-container" id="reviewsContainer">
+                        <!-- Reviews will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="reviewsEmpty" style="display: none;">
+                        <div class="empty-icon">⭐</div>
+                        <h3>No reviews yet</h3>
+                        <p>Reviews from buyers will appear here.</p>
+                    </div>
+                </section>
+
+                <!-- Settings Tab -->
+                <section class="profile-section" id="settingsSection">
+                    <div class="section-header">
+                        <h2>Account Settings</h2>
+                    </div>
+                    <div class="settings-container">
+                        <div class="settings-group">
+                            <h3>Personal Information</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="settingsName" value="John Doe" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="settingsEmail" value="john.doe@example.com" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" id="settingsPhone" value="+63 912 345 6789" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" id="settingsLocation" value="Manila, Philippines" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Security</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" value="••••••••" readonly>
+                                    <button class="edit-field-btn" onclick="showMaintenanceModal('Password Change')">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Preferences</h3>
+                            <div class="settings-form">
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span>Email notifications for new messages</span>
+                                    </label>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span>Email notifications for offers</span>
+                                    </label>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox">
+                                        <span>Email marketing updates</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Account Actions</h3>
+                            <div class="danger-zone">
+                                <button class="btn-outline danger" id="logoutBtn">
+                                    Logout
+                                </button>
+                                <button class="btn-outline danger" onclick="showMaintenanceModal('Account Deletion')">
+                                    Delete Account
+                                </button>
+                                <p class="danger-hint">This action cannot be undone</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThrifTipid</h3>
+                    <p>Buy, sell, and trade with confidence in your local community.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Buy & Sell</h4>
+                    <ul>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Safety tips</a></li>
+                        <li><a href="#">Selling guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/modals.js"></script>
+    <script src="scripts/profile.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Item - ThrifTipid</title>
+    <script>
+    (function(){
+        function getCookie(name){var v='; '+document.cookie;var p=v.split('; '+name+'=');if(p.length===2) return p.pop().split(';').shift();}
+        if(!getCookie('session_token')){
+            var next = window.location.pathname + window.location.search;
+            window.location.replace('login.html?next=' + encodeURIComponent(next));
+        }
+    })();
+    </script>
+    <script src="scripts/auth.js" defer></script>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sell.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/modals.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            
+            <div class="search-container">
+                <form action="browse.html" method="get" class="search-bar">
+                    <span class="icon-search"></span>
+                    <input type="text" name="q" placeholder="Search for anything...">
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+            </div>
+
+            <div class="header-actions">
+                <a href="browse.html" class="action-btn">
+                    <span class="icon-search"></span>
+                    <span>Browse</span>
+                </a>
+                <button class="action-btn">
+                    <span class="icon-bell"></span>
+                    <span class="badge">3</span>
+                </button>
+                <button class="action-btn">
+                    <span class="icon-heart"></span>
+                </button>
+                <a href="profile.html" class="action-btn profile">
+                    <span class="icon-user"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="sell-main">
+        <div class="container">
+            <div class="sell-page-header">
+                <h1>Sell Your Item</h1>
+                <p>Fill in the details below to list your item. Make sure to provide accurate information and clear photos.</p>
+            </div>
+
+            <form class="sell-form" id="sellForm">
+                <!-- Photo Upload Section -->
+                <section class="form-section">
+                    <h2>Photos</h2>
+                    <p class="section-description">Upload up to 10 photos. The first photo will be the main image.</p>
+                    <div class="image-upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <span class="icon-camera"></span>
+                            <p>Click to upload photos</p>
+                            <span class="upload-hint">JPG, PNG or GIF (max 5MB each)</span>
+                            <input type="file" multiple accept="image/*" id="imageInput">
+                        </div>
+                        <div class="uploaded-images-grid" id="uploadedImages">
+                            <!-- Uploaded images will appear here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic Information -->
+                <section class="form-section">
+                    <h2>Basic Information</h2>
+                    <div class="form-group">
+                        <label for="itemTitle">Item Title *</label>
+                        <input type="text" id="itemTitle" placeholder="What are you selling?" required maxlength="100">
+                        <span class="char-count"><span id="titleCharCount">0</span>/100</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemDescription">Description *</label>
+                        <textarea id="itemDescription" placeholder="Describe your item in detail..." rows="6" required maxlength="1000"></textarea>
+                        <span class="char-count"><span id="descCharCount">0</span>/1000</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemCategory">Category *</label>
+                            <select id="itemCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="home">Home & Garden</option>
+                                <option value="sports">Sports</option>
+                                <option value="books">Books</option>
+                                <option value="automotive">Automotive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemCondition">Condition *</label>
+                            <select id="itemCondition" required>
+                                <option value="">Select condition</option>
+                                <option value="new">New</option>
+                                <option value="like-new">Like New</option>
+                                <option value="good">Good</option>
+                                <option value="fair">Fair</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pricing -->
+                <section class="form-section">
+                    <h2>Pricing</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemPrice">Price (₱) *</label>
+                            <input type="number" id="itemPrice" placeholder="0.00" min="0" step="0.01" required>
+                            <span class="form-hint">Enter the price you want to sell this item for</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="originalPrice">Original Price (₱)</label>
+                            <input type="number" id="originalPrice" placeholder="0.00" min="0" step="0.01">
+                            <span class="form-hint">Optional: Original retail price</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="acceptOffers">
+                            <span>Accept offers from buyers</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Location -->
+                <section class="form-section">
+                    <h2>Location</h2>
+                    <div class="form-group">
+                        <label for="itemLocation">Location *</label>
+                        <input type="text" id="itemLocation" placeholder="City, Province" required>
+                        <span class="form-hint">Where are you selling this item?</span>
+                    </div>
+                </section>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <a href="browse.html" class="btn-outline btn-large">Cancel</a>
+                    <button type="submit" class="btn-primary btn-large">
+                        <span class="icon-check"></span>
+                        List Item
+                    </button>
+                </div>
+            </form>
+
+            <!-- Tips Section -->
+            <aside class="selling-tips">
+                <h3>Selling Tips</h3>
+                <ul>
+                    <li><strong>Take good photos:</strong> Use natural lighting and show all angles</li>
+                    <li><strong>Be descriptive:</strong> Include details about condition, size, and any flaws</li>
+                    <li><strong>Price competitively:</strong> Research similar items before pricing</li>
+                    <li><strong>Respond quickly:</strong> Buyers appreciate fast responses</li>
+                    <li><strong>Meet safely:</strong> Choose public places for transactions</li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThrifTipid</h3>
+                    <p>Buy, sell, and trade with confidence in your local community.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Buy & Sell</h4>
+                    <ul>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Safety tips</a></li>
+                        <li><a href="#">Selling guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/data.js"></script>
+    <script src="scripts/modals.js"></script>
+    <script src="scripts/sell.js"></script>
+</body>
+</html>
+
