@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items - ThrifTipid</title>
+    <link rel="stylesheet" href="/public/assets/css/main.css">
+    <link rel="stylesheet" href="/public/assets/css/icons.css">
+    <link rel="stylesheet" href="/public/assets/css/modals.css">
+    <link rel="stylesheet" href="/public/assets/css/chat.css">
+    <link rel="stylesheet" href="/public/assets/css/notifications.css">
+    <script src="/public/assets/js/auth.js" defer></script>
+    <script src="/public/assets/js/notifications.js"></script>
+    <script src="/public/assets/js/admin-check.js"></script>
+    <script src="/public/assets/js/chat.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="/public/pages/index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <span class="icon-search"></span>
+                    <input type="text" placeholder="Search for anything..." id="searchInput">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <a href="/public/pages/sell.html" class="action-btn sell-btn" data-auth-visible="logged-in" id="sellBtn">
+                    <span>Sell</span>
+                </a>
+                <a href="/public/pages/login.html" class="action-btn" data-auth-visible="logged-out" id="loginBtn">
+                    <span class="icon-user"></span>
+                    <span>Login</span>
+                </a>
+                <a href="/public/pages/signup.html" class="action-btn" data-auth-visible="logged-out" id="signupBtn">
+                    <span class="icon-user"></span>
+                    <span>Sign Up</span>
+                </a>
+                <button class="action-btn notification-bell-btn" data-auth-visible="logged-in" id="notificationBellBtn">
+                    <span class="icon-bell"></span>
+                    <span class="notification-badge" id="notificationBadge"></span>
+                </button>
+                <a href="http://localhost:3001" class="action-btn admin-btn" id="adminDashboardBtn" style="display: none;" title="Admin Dashboard">
+                    <span>Admin</span>
+                </a>
+                <a href="/public/pages/profile.html" class="action-btn profile" data-auth-visible="logged-in">
+                    <span class="icon-user"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-categories">
+        <div class="container">
+            <div class="category-tabs" id="categoryTabs">
+                <button class="category-tab active" data-category="all">All</button>
+                <!-- Categories will be loaded dynamically -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-section">
+                    <h3>Price Range</h3>
+                    <div class="price-range">
+                        <input type="range" min="0" max="1000" value="500" class="price-slider" id="priceSlider">
+                        <div class="price-labels">
+                            <span>&#8369;0</span>
+                            <span id="priceValue">&#8369;500</span>
+                            <span>&#8369;1000+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Condition</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" value="new">
+                            <span>New</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="like-new">
+                            <span>Like New</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="good">
+                            <span>Good</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="fair">
+                            <span>Fair</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Location</h3>
+                    <select class="location-select">
+                        <option>Near me</option>
+                        <option>Within 5km</option>
+                        <option>Within 10km</option>
+                        <option>Within 25km</option>
+                        <option>Anywhere</option>
+                    </select>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Sort By</h3>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recent">Most Recent</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="date-listed">Date Listed</option>
+                        <option value="most-liked">Most Liked</option>
+                    </select>
+                </div>
+            </aside>
+
+            <!-- Items Grid -->
+            <section class="items-section">
+                <div class="items-header">
+                    <h2>Items for Sale</h2>
+                    <div class="view-options">
+                        <button class="view-btn active" data-view="grid">
+                            <span class="icon-grid">⊞</span>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <span class="icon-list">☰</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="items-grid" id="itemsGrid">
+                    <!-- Items will be populated by JavaScript -->
+                </div>
+
+                <div class="load-more">
+                    <button class="load-more-btn">Load More Items</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThrifTipid</h3>
+                    <p>Buy, sell, and trade with confidence in your local community.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Buy & Sell</h4>
+                    <ul>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Safety tips</a></li>
+                        <li><a href="#">Selling guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/public/assets/js/modals.js"></script>
+    <script src="/public/assets/js/browse.js"></script>
+</body>
+</html>
+
+
+

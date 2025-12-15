@@ -1,0 +1,148 @@
+/* Icon Styles - Replacing Font Awesome with Unicode/SVG-like icons */
+.icon-exchange {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    font-size: 0; /* Hide any text content */
+}
+
+.icon-exchange::before {
+    content: '⇄';
+    display: inline-block;
+    font-size: 28px; /* Match the size from main.css */
+}
+
+.icon-search::before {
+    content: '🔍';
+    display: inline-block;
+}
+
+.icon-plus {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    font-size: 0; /* Hide any text content */
+}
+
+.icon-plus::before {
+    content: '+';
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.icon-bell::before {
+    content: '🔔';
+    display: inline-block;
+}
+
+.icon-heart::before {
+    content: '❤';
+    display: inline-block;
+}
+
+.icon-user::before {
+    content: '👤';
+    display: inline-block;
+}
+
+.icon-settings::before {
+    content: '⚙';
+    display: inline-block;
+}
+
+.icon-grid::before {
+    content: '⊞';
+    display: inline-block;
+}
+
+.icon-list::before {
+    content: '☰';
+    display: inline-block;
+}
+
+.icon-arrow {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    font-size: 0; /* Hide any text content */
+}
+
+.icon-arrow::before {
+    content: '→';
+    display: inline-block;
+    font-size: 1em;
+}
+
+.icon-arrow.left::before {
+    content: '←';
+}
+
+.icon-message {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    font-size: 0; /* Hide any text content */
+}
+
+.icon-message::before {
+    content: '💬';
+    display: inline-block;
+    font-size: 1em;
+}
+
+.icon-handshake {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    font-size: 0; /* Hide any text content */
+}
+
+.icon-handshake::before {
+    content: '🤝';
+    display: inline-block;
+    font-size: 1em;
+}
+
+.icon-camera::before {
+    content: '📷';
+    display: inline-block;
+}
+
+.icon-check::before {
+    content: '✓';
+    display: inline-block;
+}
+
+/* Icon span elements */
+.icon-search,
+.icon-plus,
+.icon-bell,
+.icon-heart,
+.icon-user,
+.icon-settings,
+.icon-grid,
+.icon-list,
+.icon-arrow,
+.icon-message,
+.icon-handshake,
+.icon-camera,
+.icon-check {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+}
+
+/* Map marker icon using CSS */
+.icon-map-marker {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    position: relative;
+}
+
+.icon-map-marker::before {
+    content: '📍';
+    display: inline-block;
+}
+

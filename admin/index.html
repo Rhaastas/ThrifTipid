@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThrifTipid Admin Dashboard</title>
+    <link rel="stylesheet" href="styles/admin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+                <span>ThrifTipid Admin</span>
+            </div>
+            <a href="http://localhost/public/pages/index.html" class="back-to-site">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Site</span>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#items" class="nav-link" data-section="items">
+                        <i class="fas fa-box"></i>
+                        <span>Items Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#users" class="nav-link" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#transactions" class="nav-link" data-section="transactions">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transaction History</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#categories" class="nav-link" data-section="categories">
+                        <i class="fas fa-tags"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="admin-info">
+                    <span class="admin-name">Admin User</span>
+                    <span class="admin-role">Super Admin</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." id="adminSearch">
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="action-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notificationBadge" style="display: none;">0</span>
+                    </button>
+                    <button class="action-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <div class="content-wrapper">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalItems">0</h3>
+                            <p>Total Items</p>
+                            <span class="stat-change" id="itemsChange"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Active Users</p>
+                            <span class="stat-change" id="usersChange"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalTransactions">0</h3>
+                            <p>Transactions</p>
+                            <span class="stat-change" id="transactionsChange"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Transactions Done</h3>
+                            <div class="chart-controls">
+                                <select id="salesPeriod">
+                                    <option value="7">Last 7 days</option>
+                                    <option value="30" selected>Last 30 days</option>
+                                    <option value="90">Last 90 days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Category Distribution</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <div class="activity-header">
+                        <h3>Recent Activity</h3>
+                        <button class="btn-outline">View All</button>
+                    </div>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Items Management Section -->
+            <section id="items" class="content-section">
+                <div class="section-header">
+                    <h2>Items Management</h2>
+                    <div class="section-actions">
+                        <button class="btn-outline" id="deleteSelectedItems" style="color: #ef4444; border-color: #ef4444;">
+                            <i class="fas fa-trash"></i>
+                            Delete Selected
+                        </button>
+                        <button class="btn-primary" id="addItem">
+                            <i class="fas fa-plus"></i>
+                            Add Item
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="itemStatusFilter">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="pending">Pending</option>
+                            <option value="sold">Sold</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select id="itemCategoryFilter">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <input type="date" id="itemDateFrom">
+                        <input type="date" id="itemDateTo">
+                    </div>
+                    
+                    <button class="btn-secondary" id="applyFilters">Apply Filters</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="itemsTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAllItems">
+                                </th>
+                                <th>Item</th>
+                                <th>Seller</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="itemsTableBody">
+                            <!-- Items will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-outline" id="prevPage">Previous</button>
+                    <span class="page-info" id="pageInfo">Page 1 of 10</span>
+                    <button class="btn-outline" id="nextPage">Next</button>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="content-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <div class="section-actions">
+                        <button class="btn-outline" id="exportUsers">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn-primary" id="addUser">
+                            <i class="fas fa-plus"></i>
+                            Add User
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="userStatusFilter">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="banned">Banned</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Role:</label>
+                        <select id="userRoleFilter">
+                            <option value="all">All Roles</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Search:</label>
+                        <input type="text" id="userSearch" placeholder="Search users...">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAllUsers">
+                                </th>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Items</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Transaction History Section -->
+            <section id="transactions" class="content-section">
+                <div class="section-header">
+                    <h2>Transaction History</h2>
+                    <div class="section-actions">
+                        <button class="btn-outline" id="exportTransactions">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Item</th>
+                                <th>Seller</th>
+                                <th>Buyer</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <!-- Transactions will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-outline" id="prevTransactionPage">Previous</button>
+                    <span class="page-info" id="transactionPageInfo">Page 1 of 1</span>
+                    <button class="btn-outline" id="nextTransactionPage">Next</button>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="categories" class="content-section">
+                <div class="section-header">
+                    <h2>Categories</h2>
+                    <button class="btn-primary" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Category
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Products Using</th>
+                                <th>First Used</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody">
+                            <!-- Categories will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>System Settings</h2>
+                </div>
+
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="general">General</button>
+                    <button class="tab-btn" data-tab="notifications">Notifications</button>
+                    <button class="tab-btn" data-tab="security">Security</button>
+                    <button class="tab-btn" data-tab="integrations">Integrations</button>
+                </div>
+
+                <div class="settings-content">
+                    <div class="tab-content active" id="general">
+                        <div class="setting-group">
+                            <label>Site Name</label>
+                            <input type="text" value="ThrifTipid" id="siteName">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Site Description</label>
+                            <textarea id="siteDescription">Buy, sell, and trade with confidence in your local community.</textarea>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Commission Rate (%)</label>
+                            <input type="number" value="5" id="commissionRate" min="0" max="100">
+                        </div>
+                        
+                        <button class="btn-primary">Save Settings</button>
+                    </div>
+
+                    <div class="tab-content" id="notifications">
+                        <div class="setting-group">
+                            <label>
+                                <input type="checkbox" checked> Email Notifications
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>
+                                <input type="checkbox" checked> Push Notifications
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>
+                                <input type="checkbox"> SMS Notifications
+                            </label>
+                        </div>
+                        
+                        <button class="btn-primary">Save Settings</button>
+                    </div>
+
+                    <div class="tab-content" id="security">
+                        <div class="setting-group">
+                            <label>Session Timeout (minutes)</label>
+                            <input type="number" value="30" id="sessionTimeout">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Password Requirements</label>
+                            <select id="passwordRequirements">
+                                <option value="basic">Basic (6+ characters)</option>
+                                <option value="medium" selected>Medium (8+ chars, numbers)</option>
+                                <option value="strong">Strong (8+ chars, numbers, symbols)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn-primary">Save Settings</button>
+                    </div>
+
+                    <div class="tab-content" id="integrations">
+                        <div class="setting-group">
+                            <label>Payment Gateway</label>
+                            <select id="paymentGateway">
+                                <option value="stripe">Stripe</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="square">Square</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Email Service</label>
+                            <select id="emailService">
+                                <option value="sendgrid">SendGrid</option>
+                                <option value="mailgun">Mailgun</option>
+                                <option value="ses">Amazon SES</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn-primary">Save Settings</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Item</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addItemForm">
+                    <div class="form-group">
+                        <label>Item Title</label>
+                        <input type="text" id="newItemTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="newItemDescription" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" id="newItemPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="newItemCategory" required>
+                                <option value="">Select a category</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Seller</label>
+                        <select id="newItemSeller" required>
+                            <!-- Sellers will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" id="cancelAddItem">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New User</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="newUserName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="newUserEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="newUserRole" required>
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="newUserPassword" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" id="cancelAddUser">Cancel</button>
+                        <button type="submit" class="btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Category</h2>
+                <button class="close-modal" data-modal="addCategoryModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="form-group">
+                        <label>Category Name *</label>
+                        <input type="text" id="newCategoryName" required placeholder="e.g., Electronics, Clothing, Books">
+                        <small>Enter a category name that will be available for products</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" id="cancelAddCategory">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications">&times;</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="scripts/admin.js"></script>
+</body>
+</html>

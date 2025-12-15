@@ -1,0 +1,194 @@
+/* Seller Dropdown Styles */
+
+.seller-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.seller-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    min-width: 320px;
+    max-width: 400px;
+    z-index: 100;
+    display: none;
+    animation: slideDown 0.3s ease;
+    border: 1px solid #e1e5e9;
+}
+
+.seller-dropdown.active {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.seller-dropdown-header {
+    padding: 20px;
+    border-bottom: 1px solid #e1e5e9;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.seller-info-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.seller-avatar-dropdown {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.seller-name-dropdown {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.seller-rating-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stars-dropdown {
+    color: #ffc107;
+    font-size: 14px;
+}
+
+.rating-text-dropdown {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.seller-dropdown-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 20px;
+    border-bottom: 1px solid #e1e5e9;
+    background: white;
+}
+
+.stat-dropdown {
+    text-align: center;
+}
+
+.stat-value-dropdown {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ff6b35;
+    margin-bottom: 4px;
+}
+
+.stat-label-dropdown {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.seller-dropdown-actions {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dropdown-action-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #333;
+}
+
+.dropdown-action-btn:hover {
+    background: #f8f9fa;
+    color: #ff6b35;
+}
+
+.dropdown-action-btn.primary {
+    background: #ff6b35;
+    color: white;
+    justify-content: center;
+}
+
+.dropdown-action-btn.primary:hover {
+    background: #e55a2b;
+}
+
+.dropdown-action-btn.danger {
+    color: #ff4757;
+}
+
+.dropdown-action-btn.danger:hover {
+    background: #fff5f5;
+    color: #ff4757;
+}
+
+.dropdown-action-icon {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .seller-dropdown {
+        min-width: 280px;
+        max-width: 90vw;
+        right: auto;
+        left: 0;
+    }
+
+    .seller-dropdown-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .stat-value-dropdown {
+        font-size: 20px;
+    }
+
+    .stat-label-dropdown {
+        font-size: 11px;
+    }
+}
+

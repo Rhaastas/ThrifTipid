@@ -1,0 +1,222 @@
+/* Notification Bell and Dropdown Styles */
+
+.notification-bell-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.notification-bell-btn:hover {
+    transform: scale(1.1);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    height: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 360px;
+    max-height: 480px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    animation: slideDown 0.2s ease;
+}
+
+.notification-dropdown.active {
+    display: flex;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-dropdown-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e1e5e9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-dropdown-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.mark-all-read-btn {
+    background: none;
+    border: none;
+    color: #ff6b35;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.mark-all-read-btn:hover {
+    background: #fff5f2;
+}
+
+.notification-dropdown-body {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 360px;
+}
+
+.notification-loading {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.notification-empty {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.notification-empty .empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.notification-empty p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.notification-item {
+    padding: 12px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: start;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f1f3f4;
+    position: relative;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item.unread {
+    background: #fff5f2;
+}
+
+.notification-item.unread:hover {
+    background: #ffe8e0;
+}
+
+.notification-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-content p {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #2c3e50;
+    line-height: 1.4;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.unread-dot {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 8px;
+    height: 8px;
+    background: #ff6b35;
+    border-radius: 50%;
+}
+
+.notification-dropdown-footer {
+    padding: 12px 20px;
+    border-top: 1px solid #e1e5e9;
+    text-align: center;
+}
+
+.notification-dropdown-footer a {
+    color: #ff6b35;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.notification-dropdown-footer a:hover {
+    color: #f7931e;
+}
+
+/* Scrollbar styling for dropdown */
+.notification-dropdown-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-dropdown-body::-webkit-scrollbar-track {
+    background: #f1f3f4;
+}
+
+.notification-dropdown-body::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+.notification-dropdown-body::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}

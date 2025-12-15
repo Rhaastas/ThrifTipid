@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - ThrifTipid</title>
+    <link rel="stylesheet" href="/public/assets/css/main.css">
+    <link rel="stylesheet" href="/public/assets/css/profile.css">
+    <link rel="stylesheet" href="/public/assets/css/icons.css">
+    <link rel="stylesheet" href="/public/assets/css/modals.css">
+    <link rel="stylesheet" href="/public/assets/css/chat.css">
+    <link rel="stylesheet" href="/public/assets/css/notifications.css">
+</head>
+<body>
+    <script src="/public/assets/js/auth.js" defer></script>
+    <script src="/public/assets/js/notifications.js"></script>
+    <script src="/public/assets/js/admin-check.js"></script>
+    <script src="/public/assets/js/chat.js" defer></script>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="/public/pages/index.html" class="logo">
+                <span class="icon-exchange"></span>
+                <span>ThrifTipid</span>
+            </a>
+            
+            <div class="search-container">
+                <form action="browse.html" method="get" class="search-bar">
+                    <span class="icon-search"></span>
+                    <input type="text" name="q" placeholder="Search for anything...">
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+            </div>
+
+            <div class="header-actions">
+                <a href="/public/pages/sell.html" class="action-btn sell-btn">
+                    <span>Sell</span>
+                </a>
+                <button class="action-btn notification-bell-btn" id="notificationBellBtn">
+                    <span class="icon-bell"></span>
+                    <span class="notification-badge" id="notificationBadge"></span>
+                </button>
+                <button class="chat-icon-btn action-btn" onclick="chatSystem?.toggleChatList()" title="Messages">
+                    <span class="icon">💬</span>
+                    <span class="chat-badge" id="chatBadge" style="display: none;">0</span>
+                </button>
+                <a href="http://localhost:3001" class="action-btn admin-btn" id="adminDashboardBtn" style="display: none;" title="Admin Dashboard">
+                    <span>Admin</span>
+                </a>
+                <a href="/public/pages/profile.html" class="action-btn profile active">
+                    <span class="icon-user"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <div class="container">
+            <!-- Profile Header -->
+            <section class="profile-header">
+                <div class="profile-cover">
+                    <div class="cover-placeholder"></div>
+                    <button class="edit-cover-btn">Edit Cover Photo</button>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <div class="avatar-placeholder-large">JD</div>
+                        </div>
+                        <button class="edit-avatar-btn" id="editAvatarBtn">
+                            <span class="icon-camera"></span>
+                        </button>
+                    </div>
+                    <div class="profile-details">
+                        <h1 id="profileName">John Doe</h1>
+                        <p class="profile-location" id="profileLocation">
+                            <span class="icon-map-marker"></span>
+                            Manila, Philippines
+                        </p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="itemsCount">12</span>
+                                <span class="stat-label">Items Listed</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="soldCount">8</span>
+                                <span class="stat-label">Items Sold</span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn-primary" id="editProfileBtn">Edit Profile</button>
+                            <button class="btn-outline" id="viewSettingsBtn">Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Navigation Tabs -->
+            <nav class="profile-tabs">
+                <button class="profile-tab active" data-tab="items">My Items</button>
+                <button class="profile-tab" data-tab="purchased">Items Bought</button>
+                <button class="profile-tab" data-tab="notifications">Notifications</button>
+                <button class="profile-tab" data-tab="settings">Settings</button>
+            </nav>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- My Items Tab -->
+                <section class="profile-section active" id="itemsSection">
+                    <div class="section-header">
+                        <h2>My Listed Items</h2>
+                        <a href="/public/pages/sell.html" class="btn-primary">+ List New Item</a>
+                    </div>
+                    <div class="items-filter">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="sold">Sold</button>
+                        <button class="filter-btn" data-filter="draft">Draft</button>
+                    </div>
+                    <div class="items-grid" id="myItemsGrid">
+                        <!-- Items will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="itemsEmpty" style="display: none;">
+                        <div class="empty-icon">📦</div>
+                        <h3>No items listed yet</h3>
+                        <p>Start selling by listing your first item!</p>
+                        <a href="/public/pages/sell.html" class="btn-primary">List Your First Item</a>
+                    </div>
+                </section>
+
+                <!-- Items Bought Tab -->
+                <section class="profile-section" id="purchasedSection">
+                    <div class="section-header">
+                        <h2>Items Bought</h2>
+                    </div>
+                    <div class="items-grid" id="purchasedItemsGrid">
+                        <!-- Purchased items will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="purchasedEmpty" style="display: none;">
+                        <div class="empty-icon">🛍️</div>
+                        <h3>No purchases yet</h3>
+                        <p>Items you buy will appear here.</p>
+                        <a href="/public/pages/browse.html" class="btn-primary">Start Shopping</a>
+                    </div>
+                </section>
+
+                <!-- Notifications Tab -->
+                <section class="profile-section" id="notificationsSection">
+                    <div class="section-header">
+                        <h2>Notifications</h2>
+                    </div>
+                    <div id="notificationsList" class="notifications-list">
+                        <!-- Notifications will be populated by JavaScript -->
+                    </div>
+                    <div class="empty-state" id="notificationsEmpty" style="display: none;">
+                        <div class="empty-icon">🔔</div>
+                        <h3>No notifications</h3>
+                        <p>You'll see updates here, like bids on your auctions.</p>
+                    </div>
+                </section>
+
+                <!-- Settings Tab -->
+                <section class="profile-section" id="settingsSection">
+                    <div class="section-header">
+                        <h2>Account Settings</h2>
+                    </div>
+                    <div class="settings-container">
+                        <div class="settings-group">
+                            <h3>Personal Information</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="settingsName" value="John Doe" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="settingsEmail" value="john.doe@example.com" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" id="settingsPhone" value="+63 912 345 6789" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" id="settingsLocation" value="Manila, Philippines" readonly>
+                                    <button class="edit-field-btn">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Security</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" value="••••••••" readonly>
+                                    <button class="edit-field-btn" onclick="showMaintenanceModal('Password Change')">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Preferences</h3>
+                            <div class="settings-form">
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span>Email notifications for new messages</span>
+                                    </label>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span>Email notifications for offers</span>
+                                    </label>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox">
+                                        <span>Email marketing updates</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Account Actions</h3>
+                            <div class="danger-zone">
+                                <button class="btn-logout" id="logoutBtn">
+                                    <span style="margin-right: 8px;">🚪</span>
+                                    <span>Logout</span>
+                                </button>
+                                <button class="btn-outline danger" onclick="showMaintenanceModal('Account Deletion')">
+                                    Delete Account
+                                </button>
+                                <p class="danger-hint">Deleting your account cannot be undone</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Logout Confirmation Popup -->
+    <div class="logout-popup-overlay" id="logoutModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="logout-popup" style="background: white; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 20px; padding: 20px 28px; animation: slideDown 0.3s ease;">
+            <div style="font-size: 32px; line-height: 1;">🚪</div>
+            <div style="flex: 1;">
+                <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600; color: #2c3e50;">Confirm Logout</h3>
+                <p style="margin: 0; font-size: 13px; color: #6c757d;">Are you sure you want to logout?</p>
+            </div>
+            <button onclick="closeLogoutModal()" style="padding: 10px 24px; border-radius: 4px; border: 2px solid #dee2e6; background: white; color: #495057; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+            <button onclick="confirmLogout()" style="padding: 10px 28px; border-radius: 4px; border: none; background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(255,107,53,0.3); font-size: 14px;">Logout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThrifTipid</h3>
+                    <p>Buy, sell, and trade with confidence in your local community.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Buy & Sell</h4>
+                    <ul>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Safety tips</a></li>
+                        <li><a href="#">Selling guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ThrifTipid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/public/assets/js/auth.js"></script>
+    <script src="/public/assets/js/modals.js"></script>
+    <script src="/public/assets/js/profile.js"></script>
+</body>
+</html>
+
+
+
